@@ -1,22 +1,20 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Users, GraduationCap,
-  BookOpen, ClipboardCheck, School, LogOut
+  BookOpen, ClipboardCheck, Building2, DollarSign, LogOut, School
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import styles from './Sidebar.module.css'
-import { Building2, DollarSign } from 'lucide-react'
 
-// Define which roles can see each nav item
 const NAV_ITEMS = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['branch_admin', 'finance', 'teacher', 'student', 'parent'] },
+  { to: '/dashboard',       icon: LayoutDashboard, label: 'Dashboard', roles: ['branch_admin','finance','teacher','student','parent'] },
   { to: '/owner-dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['owner'] },
-  { to: '/branches', icon: Building2, label: 'Branches', roles: ['owner'] },
-  { to: '/students', icon: Users, label: 'Students', roles: ['owner', 'branch_admin', 'finance', 'teacher'] },
-  { to: '/teachers', icon: GraduationCap, label: 'Teachers', roles: ['owner', 'branch_admin', 'finance'] },
-  { to: '/classes', icon: BookOpen, label: 'Classes', roles: ['branch_admin', 'teacher'] },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance', roles: ['branch_admin', 'teacher'] },
-  { to: '/finance', icon: DollarSign, label: 'Finance', roles: ['owner', 'finance'] },
+  { to: '/branches',        icon: Building2,       label: 'Branches',  roles: ['owner'] },
+  { to: '/students',        icon: Users,           label: 'Students',  roles: ['owner','branch_admin','finance','teacher'] },
+  { to: '/teachers',        icon: GraduationCap,   label: 'Teachers',  roles: ['owner','branch_admin','finance'] },
+  { to: '/classes',         icon: BookOpen,        label: 'Classes',   roles: ['branch_admin','teacher'] },
+  { to: '/attendance',      icon: ClipboardCheck,  label: 'Attendance',roles: ['branch_admin','teacher'] },
+  { to: '/finance',         icon: DollarSign,      label: 'Finance',   roles: ['owner','finance'] },
 ]
 
 const ROLE_COLORS = {
@@ -46,61 +44,65 @@ export default function Sidebar() {
     navigate('/login')
   }
 
-  // Only show nav items the current user's role can access
   const visibleItems = NAV_ITEMS.filter(item =>
     currentUser && item.roles.includes(currentUser.role)
   )
 
+  const initials = currentUser?.name
+    ? currentUser.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
+    : '?'
+
+  const avatarColor = ROLE_COLORS[currentUser?.role] || '#7c3aed'
+
   return (
     <aside className={styles.sidebar}>
-      {/* Logo */}
-      <div className={styles.logo}>
-        <School size={24} />
-        <span>EduManage</span>
+      {/* Brand */}
+      <div className={styles.brand}>
+        <div className={styles.brandIcon}>
+          <School size={18} />
+        </div>
+        <div>
+          <p className={styles.brandName}>EduManage</p>
+          <p className={styles.brandSub}>{ROLE_LABELS[currentUser?.role] || 'Portal'}</p>
+        </div>
       </div>
 
-      {/* Role Badge */}
-      {currentUser && (
-        <div className={styles.roleBadge} style={{ background: ROLE_COLORS[currentUser.role] + '22', borderColor: ROLE_COLORS[currentUser.role] + '44' }}>
-          <span className={styles.roleDot} style={{ background: ROLE_COLORS[currentUser.role] }} />
-          <span style={{ color: ROLE_COLORS[currentUser.role] }}>{ROLE_LABELS[currentUser.role]}</span>
-        </div>
-      )}
-
-      {/* Navigation */}
+      {/* Nav */}
       <nav className={styles.nav}>
-        <p className={styles.navLabel}>MAIN MENU</p>
-        {visibleItems.map(({ to, icon: Icon, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={to === '/'}
-            className={({ isActive }) =>
-              `${styles.navItem} ${isActive ? styles.active : ''}`
-            }
-          >
-            <Icon size={18} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
+        {visibleItems.map((item) => {
+          const Icon = item.icon
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `${styles.navLink} ${isActive ? styles.active : ''}`
+              }
+            >
+              <Icon size={17} className={styles.navIcon} />
+              {item.label}
+            </NavLink>
+          )
+        })}
       </nav>
 
-      {/* User + Logout */}
+      {/* Footer */}
       <div className={styles.footer}>
-        {currentUser && (
-          <div className={styles.userRow}>
-            <div className={styles.userAvatar} style={{ background: ROLE_COLORS[currentUser.role] }}>
-              {currentUser.name.charAt(0)}
-            </div>
-            <div className={styles.userInfo}>
-              <p className={styles.userName}>{currentUser.name}</p>
-              <p className={styles.userEmail}>{currentUser.email}</p>
-            </div>
+        <div className={styles.userCard}>
+          <div
+            className={styles.avatar}
+            style={{ background: avatarColor }}
+          >
+            {initials}
           </div>
-        )}
+          <div className={styles.userInfo}>
+            <p className={styles.userName}>{currentUser?.name}</p>
+            <p className={styles.userRole}>{ROLE_LABELS[currentUser?.role]}</p>
+          </div>
+        </div>
         <button className={styles.logoutBtn} onClick={handleLogout}>
           <LogOut size={16} />
-          <span>Sign Out</span>
+          Sign Out
         </button>
       </div>
     </aside>

@@ -1,11 +1,13 @@
 import { useApp } from '../context/AppContext'
 import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 import { Building2, Users, GraduationCap, DollarSign } from 'lucide-react'
 import styles from './OwnerDashboard.module.css'
 
 export default function OwnerDashboard() {
   const { branches, students, teachers, classes, payments } = useApp()
   const { currentUser } = useAuth()
+  const navigate = useNavigate()
 
   const totalRevenue = payments
     .filter((p) => p.status === 'Paid')
@@ -55,18 +57,23 @@ export default function OwnerDashboard() {
             </thead>
             <tbody>
               {branches.map((branch) => {
-                const branchClasses = classes.filter((c) => c.branchId === branch.id)
-                const branchTeachers = teachers.filter((t) => t.branchId === branch.id)
-                const branchStudents = students.filter((s) => s.branchId === branch.id)
-                return (
-                  <tr key={branch.id}>
-                    <td className={styles.name}>{branch.name}</td>
-                    <td>{branchClasses.length}</td>
-                    <td>{branchTeachers.length}</td>
-                    <td>{branchStudents.length}</td>
-                  </tr>
-                )
-              })}
+  const branchClasses = classes.filter((c) => c.branchId === branch.id)
+  const branchTeachers = teachers.filter((t) => t.branchId === branch.id)
+  const branchStudents = students.filter((s) => s.branchId === branch.id)
+  return (
+    <tr
+      key={branch.id}
+      onClick={() => navigate(`/branches/${branch.id}`)}
+      style={{ cursor: 'pointer' }}
+      className={styles.clickableRow}
+    >
+      <td className={styles.name}>{branch.name}</td>
+      <td>{branchClasses.length}</td>
+      <td>{branchTeachers.length}</td>
+      <td>{branchStudents.length}</td>
+    </tr>
+  )
+})}
             </tbody>
           </table>
         </div>

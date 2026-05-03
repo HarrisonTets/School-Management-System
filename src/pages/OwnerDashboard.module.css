@@ -21,3 +21,7 @@
 .table tr:last-child td { border-bottom: none; }
 .name { font-weight: 500; color: #0f172a; }
 .revenue { font-weight: 600; color: #16a34a; }
+.clickableRow:hover {
+  background: #f5f3ff;
+  transition: background 0.1s;
+}
