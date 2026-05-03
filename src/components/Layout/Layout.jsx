@@ -1,4 +1,3 @@
-// ✅ Layout must use Outlet, not {children}
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header'
@@ -11,7 +10,7 @@ export default function Layout() {
       <div className={styles.main}>
         <Header />
         <main className={styles.content}>
-          <Outlet />   {/* ← must be Outlet, not {children} */}
+          <Outlet />
         </main>
       </div>
     </div>

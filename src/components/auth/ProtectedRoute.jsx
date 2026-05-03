@@ -1,15 +1,16 @@
-// ✅ ProtectedRoute must render children, not an Outlet
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 export default function ProtectedRoute({ children, allowedRoles }) {
-  const { user } = useAuth()
+  const { currentUser } = useAuth()
 
-  if (!user) return <Navigate to="/login" replace />
+  if (!currentUser) {
+    return <Navigate to="/login" replace />
+  }
 
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
+  if (allowedRoles && !allowedRoles.includes(currentUser.role)) {
     return <Navigate to="/unauthorized" replace />
   }
 
-  return children   // ← must be this, not <Outlet />
+  return children
 }

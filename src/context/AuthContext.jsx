@@ -24,6 +24,7 @@ export function AuthProvider({ children }) {
 
   function logout() {
     setCurrentUser(null)
+    setError('')
   }
 
   function hasPermission(allowedRoles) {
@@ -35,9 +36,10 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         currentUser,
+        user: currentUser,
+        error,
         login,
         logout,
-        error,
         hasPermission,
       }}
     >
