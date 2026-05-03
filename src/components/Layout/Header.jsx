@@ -4,24 +4,36 @@ import { useAuth } from '../../context/AuthContext'
 import styles from './Header.module.css'
 
 const PAGE_TITLES = {
-  '/':           'Dashboard',
-  '/students':   'Students',
-  '/teachers':   'Teachers',
-  '/classes':    'Classes',
+  '/': 'Dashboard',
+  '/dashboard': 'Dashboard',
+  '/owner-dashboard': 'Dashboard',
+  '/branches': 'Branches',
+  '/students': 'Students',
+  '/teachers': 'Teachers',
+  '/classes': 'Classes',
   '/attendance': 'Attendance',
+  '/finance': 'Finance',
 }
 
 export default function Header() {
   const { pathname } = useLocation()
   const { currentUser } = useAuth()
-  const title = PAGE_TITLES[pathname] || 'School Management'
+
+  const title =
+    PAGE_TITLES[pathname] ||
+    (pathname.startsWith('/branches/') ? 'Branch Detail' : 'School Management')
 
   return (
     <header className={styles.header}>
       <div>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.date}>
-          {new Date().toLocaleDateString('en-ZM', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}
+          {new Date().toLocaleDateString('en-ZM', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
         </p>
       </div>
       <div className={styles.actions}>

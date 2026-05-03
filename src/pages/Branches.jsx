@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { Plus, Search, Pencil, Trash2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../components/ui/Button'
 import Modal from '../components/ui/Modal'
 import FormField, { Input, Select } from '../components/ui/FormField'
@@ -10,6 +11,7 @@ const EMPTY = { name: '', location: '', adminId: '', phone: '', email: '', statu
 
 export default function Branches() {
   const { branches, students, teachers, classes, addBranch, updateBranch, deleteBranch } = useApp()
+  const navigate = useNavigate()
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState(null)
@@ -25,10 +27,16 @@ export default function Branches() {
     setForm((f) => ({ ...f, [name]: value }))
   }
 
-  function handleEdit(branch) {
+  function handleEdit(e, branch) {
+    e.stopPropagation()
     setEditing(branch.id)
     setForm({ ...branch })
     setShowForm(true)
+  }
+
+  function handleDelete(e, id) {
+    e.stopPropagation()
+    deleteBranch(id)
   }
 
   function handleSubmit(e) {
@@ -88,7 +96,12 @@ export default function Branches() {
                 const branchClasses = classes.filter((c) => c.branchId === b.id).length
                 const branchStudents = students.filter((s) => s.branchId === b.id).length
                 return (
-                  <tr key={b.id}>
+                  <tr
+                    key={b.id}
+                    onClick={() => navigate(`/branches/${b.id}`)}
+                    style={{ cursor: 'pointer' }}
+                    className={styles.clickableRow}
+                  >
                     <td className={styles.num}>{i + 1}</td>
                     <td className={styles.name}>{b.name}</td>
                     <td>{b.location}</td>
@@ -97,10 +110,10 @@ export default function Branches() {
                     <td>{branchStudents}</td>
                     <td>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button className={styles.deleteBtn} onClick={() => handleEdit(b)} aria-label="Edit branch">
+                        <button className={styles.deleteBtn} onClick={(e) => handleEdit(e, b)} aria-label="Edit branch">
                           <Pencil size={14} />
                         </button>
-                        <button className={styles.deleteBtn} onClick={() => deleteBranch(b.id)} aria-label="Delete branch">
+                        <button className={styles.deleteBtn} onClick={(e) => handleDelete(e, b.id)} aria-label="Delete branch">
                           <Trash2 size={14} />
                         </button>
                       </div>

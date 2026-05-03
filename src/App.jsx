@@ -13,15 +13,18 @@ import Attendance from './pages/Attendance'
 import OwnerDashboard from './pages/OwnerDashboard'
 import Branches from './pages/Branches'
 import Finance from './pages/Finance'
+import BranchDetail from './pages/BranchDetail'
 
 export default function App() {
   return (
     <AuthProvider>
       <AppProvider>
         <Routes>
+          {/* Public */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
 
+          {/* Protected — all share Layout */}
           <Route
             element={
               <ProtectedRoute>
@@ -29,22 +32,16 @@ export default function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="/owner-dashboard" element={
-  <ProtectedRoute allowedRoles={['owner']}>
-    <OwnerDashboard />
-  </ProtectedRoute>
-} />
-<Route path="/branches" element={
-  <ProtectedRoute allowedRoles={['owner']}>
-    <Branches />
-  </ProtectedRoute>
-} />
-<Route path="/finance" element={
-  <ProtectedRoute allowedRoles={['owner', 'finance']}>
-    <Finance />
-  </ProtectedRoute>
-} />
+            {/* Smart redirect based on role is handled in LoginPage */}
             <Route index element={<Navigate to="/dashboard" replace />} />
+
+            {/* Owner routes */}
+            <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+            <Route path="/branches" element={<Branches />} />
+            <Route path="/branches/:id" element={<BranchDetail />} />
+            <Route path="/finance" element={<Finance />} />
+
+            {/* Shared routes */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/students" element={<Students />} />
             <Route path="/teachers" element={<Teachers />} />

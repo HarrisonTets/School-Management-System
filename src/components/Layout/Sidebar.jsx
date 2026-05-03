@@ -14,8 +14,8 @@ const NAV_ITEMS = [
   { to: '/branches', icon: Building2, label: 'Branches', roles: ['owner'] },
   { to: '/students', icon: Users, label: 'Students', roles: ['owner', 'branch_admin', 'finance', 'teacher'] },
   { to: '/teachers', icon: GraduationCap, label: 'Teachers', roles: ['owner', 'branch_admin', 'finance'] },
-  { to: '/classes', icon: BookOpen, label: 'Classes', roles: ['owner', 'branch_admin', 'teacher'] },
-  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance', roles: ['owner', 'branch_admin', 'teacher'] },
+  { to: '/classes', icon: BookOpen, label: 'Classes', roles: ['branch_admin', 'teacher'] },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance', roles: ['branch_admin', 'teacher'] },
   { to: '/finance', icon: DollarSign, label: 'Finance', roles: ['owner', 'finance'] },
 ]
 
