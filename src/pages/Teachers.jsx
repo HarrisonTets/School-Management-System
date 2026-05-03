@@ -6,6 +6,7 @@ import Badge from '../components/ui/Badge'
 import Modal from '../components/ui/Modal'
 import FormField, { Input, Select } from '../components/ui/FormField'
 import styles from './ListPage.module.css'
+import { useNavigate } from 'react-router-dom'
 
 const SUBJECTS = ['Mathematics','English','Science','Social Studies','ICT','French','Physical Education','Art','Music']
 const EMPTY = { name:'', subject:'Mathematics', phone:'', email:'', status:'Active', classId:'' }
@@ -15,6 +16,7 @@ export default function Teachers() {
   const [search,   setSearch]   = useState('')
   const [showForm, setShowForm] = useState(false)
   const [form,     setForm]     = useState(EMPTY)
+  const navigate = useNavigate()
 
   const filtered = teachers.filter(t =>
     t.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -47,7 +49,12 @@ export default function Teachers() {
             {filtered.map((t, i) => {
               const cls = classes.find(c => c.id === t.classId)
               return (
-                <tr key={t.id}>
+                <tr
+  key={t.id}
+  onClick={() => navigate(`/teachers/${t.id}`)}
+  style={{ cursor: 'pointer' }}
+  className={styles.clickableRow}
+>
                   <td className={styles.num}>{i + 1}</td>
                   <td className={styles.name}>{t.name}</td>
                   <td><Badge color="purple">{t.subject}</Badge></td>
