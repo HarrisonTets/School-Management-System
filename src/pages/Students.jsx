@@ -6,6 +6,7 @@ import Badge from '../components/ui/Badge'
 import Modal from '../components/ui/Modal'
 import FormField, { Input, Select } from '../components/ui/FormField'
 import styles from './ListPage.module.css'
+import { useNavigate } from 'react-router-dom'
 
 const EMPTY = {
   name: '',
@@ -22,7 +23,7 @@ export default function Students() {
   const [search, setSearch] = useState('')
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(EMPTY)
-
+const navigate = useNavigate()
   const filtered = students.filter(
     (s) =>
       s.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -90,7 +91,12 @@ export default function Students() {
                 const cls = classes.find((c) => c.id === s.classId)
 
                 return (
-                  <tr key={s.id}>
+                  <tr
+  key={s.id}
+  onClick={() => navigate(`/students/${s.id}`)}
+  style={{ cursor: 'pointer' }}
+  className={styles.clickableRow}
+>
                     <td className={styles.num}>{i + 1}</td>
                     <td className={styles.name}>{s.name}</td>
                     <td>

@@ -14,6 +14,7 @@ import OwnerDashboard from './pages/OwnerDashboard'
 import Branches from './pages/Branches'
 import Finance from './pages/Finance'
 import BranchDetail from './pages/BranchDetail'
+import StudentDetail from './pages/StudentDetail'
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
             {/* Shared routes */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/students/:id" element={<StudentDetail />} />
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/classes" element={<Classes />} />
             <Route path="/attendance" element={<Attendance />} />

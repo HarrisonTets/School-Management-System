@@ -20,9 +20,9 @@ export default function Header() {
   const { currentUser } = useAuth()
 
   const title =
-    PAGE_TITLES[pathname] ||
-    (pathname.startsWith('/branches/') ? 'Branch Detail' : 'School Management')
-
+  PAGE_TITLES[pathname] ||
+  (pathname.startsWith('/branches/') ? 'Branch Detail' : '') ||
+  (pathname.startsWith('/students/') ? 'Student Profile' : 'School Management')
   return (
     <header className={styles.header}>
       <div>
