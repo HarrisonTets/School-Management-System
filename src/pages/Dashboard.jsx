@@ -15,7 +15,12 @@ export default function Dashboard() {
     { label: 'Classes',        value: classes.length,  sub: 'Active classes',            icon: BookOpen,       color: 'purple'},
     { label: 'Attendance Records', value: attendance.length, sub: 'Sessions logged',   icon: ClipboardCheck, color: 'amber' },
   ]
-
+return (
+  <div>
+    <h1 style={{color:'red'}}>Students: {students.length}</h1>
+    {/* rest of your code */}
+  </div>
+)
   return (
     <div className={`${styles.page} page-enter`}>
       <p className={styles.welcome}>Welcome back! Here's what's happening today.</p>
@@ -72,11 +77,13 @@ export default function Dashboard() {
             const teacher = teachers.find(t => t.id === cls.teacherId)
             const pct = Math.round((classStudents / cls.capacity) * 100)
             return (
+              
               <div key={cls.id} className={styles.classRow}>
                 <div>
                   <p className={styles.className}>{cls.name}</p>
                   <p className={styles.classTeacher}>{teacher ? teacher.name : 'No teacher assigned'}</p>
                 </div>
+              
                 <div className={styles.classRight}>
                   <p className={styles.classCount}>{classStudents}/{cls.capacity}</p>
                   <div className={styles.progressBar}>
