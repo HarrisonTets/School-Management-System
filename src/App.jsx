@@ -10,6 +10,9 @@ import Students from './pages/Students'
 import Teachers from './pages/Teachers'
 import Classes from './pages/Classes'
 import Attendance from './pages/Attendance'
+import OwnerDashboard from './pages/OwnerDashboard'
+import Branches from './pages/Branches'
+import Finance from './pages/Finance'
 
 export default function App() {
   return (
@@ -26,6 +29,21 @@ export default function App() {
               </ProtectedRoute>
             }
           >
+            <Route path="/owner-dashboard" element={
+  <ProtectedRoute allowedRoles={['owner']}>
+    <OwnerDashboard />
+  </ProtectedRoute>
+} />
+<Route path="/branches" element={
+  <ProtectedRoute allowedRoles={['owner']}>
+    <Branches />
+  </ProtectedRoute>
+} />
+<Route path="/finance" element={
+  <ProtectedRoute allowedRoles={['owner', 'finance']}>
+    <Finance />
+  </ProtectedRoute>
+} />
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/students" element={<Students />} />

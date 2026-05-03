@@ -117,3 +117,57 @@ export const initialClasses = [
 ]
 
 export const initialAttendance = []
+
+export const initialBranches = [
+  {
+    id: 1,
+    name: 'Lusaka Main',
+    location: 'Lusaka, Zambia',
+    adminId: 2,
+    phone: '0211-000-001',
+    email: 'lusaka@school.zm',
+    status: 'Active',
+  },
+  {
+    id: 2,
+    name: 'Kitwe Branch',
+    location: 'Kitwe, Zambia',
+    adminId: null,
+    phone: '0212-000-002',
+    email: 'kitwe@school.zm',
+    status: 'Active',
+  },
+]
+
+export const initialPayments = [
+  {
+    id: 1,
+    paymentId: 'MM-20240101-001',
+    branchId: 1,
+    studentId: 1,
+    classId: 1,
+    amount: 1500,
+    date: '2024-01-15',
+    status: 'Paid',
+  },
+  {
+    id: 2,
+    paymentId: 'MM-20240102-002',
+    branchId: 1,
+    studentId: 2,
+    classId: 1,
+    amount: 1500,
+    date: '2024-01-16',
+    status: 'Paid',
+  },
+  {
+    id: 3,
+    paymentId: 'MM-20240103-003',
+    branchId: 2,
+    studentId: 3,
+    classId: 2,
+    amount: 1200,
+    date: '2024-01-17',
+    status: 'Outstanding',
+  },
+]

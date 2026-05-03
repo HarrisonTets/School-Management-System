@@ -5,14 +5,18 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import styles from './Sidebar.module.css'
+import { Building2, DollarSign } from 'lucide-react'
 
 // Define which roles can see each nav item
 const NAV_ITEMS = [
-  { to: '/',           icon: LayoutDashboard, label: 'Dashboard',  roles: ['owner','branch_admin','finance','teacher','student','parent'] },
-  { to: '/students',   icon: Users,           label: 'Students',   roles: ['owner','branch_admin','finance','teacher'] },
-  { to: '/teachers',   icon: GraduationCap,   label: 'Teachers',   roles: ['owner','branch_admin','finance'] },
-  { to: '/classes',    icon: BookOpen,        label: 'Classes',    roles: ['owner','branch_admin','teacher'] },
-  { to: '/attendance', icon: ClipboardCheck,  label: 'Attendance', roles: ['owner','branch_admin','teacher'] },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['branch_admin', 'finance', 'teacher', 'student', 'parent'] },
+  { to: '/owner-dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['owner'] },
+  { to: '/branches', icon: Building2, label: 'Branches', roles: ['owner'] },
+  { to: '/students', icon: Users, label: 'Students', roles: ['owner', 'branch_admin', 'finance', 'teacher'] },
+  { to: '/teachers', icon: GraduationCap, label: 'Teachers', roles: ['owner', 'branch_admin', 'finance'] },
+  { to: '/classes', icon: BookOpen, label: 'Classes', roles: ['owner', 'branch_admin', 'teacher'] },
+  { to: '/attendance', icon: ClipboardCheck, label: 'Attendance', roles: ['owner', 'branch_admin', 'teacher'] },
+  { to: '/finance', icon: DollarSign, label: 'Finance', roles: ['owner', 'finance'] },
 ]
 
 const ROLE_COLORS = {
